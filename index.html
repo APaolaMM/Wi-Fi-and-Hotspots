@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Wi-Fi and Hotspots</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 3_Wi-Fi and Hotspots.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Wi-Fi and Hotspots</legend>
+	<div id="test">
+		<div class="cuestion">1. “Red de dispositivos que se comunican entre s&iacute; o con otra red sin utilizar elementos f&iacute;sicos como cables”. La definici&oacute;n anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : DDoS.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Redes inal&aacute;mbricas.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Routers.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. Un componente de las redes inal&aacute;mbricas corresponde a: </div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Internet.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Cables de fibra &oacute;ptica.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Antena.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. Una amenaza relacionada corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Afecci&oacute;n de factores externos.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Inyecci&oacute;n de tr&aacute;fico en redes a gran distancia.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Vulnerabilidad. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. “Red de dispositivos que se comunican entre sí o con otra red sin utilizar elementos físicos como cables”. La definición anterior corresponde a:",
+				respuestas:
+				{
+					a: "DDoS.",
+					b: "Redes inalámbricas.",
+					c: "Routers.",
+				},
+				respuestaCorrecta: "b",
+			},
+			{
+				pregunta: "2. Un componente de las redes inalámbricas corresponde a:",
+				respuestas:
+				{
+					a: "Internet.",
+					b: "Cables de fibra óptica.",
+					c: "Antena.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "3. Una amenaza relacionada corresponde a:",
+				respuestas:
+				{
+					a: "Afección de factores externos.",
+					b: "Inyección de tráfico en redes a gran distancia.",
+					c: "Vulnerabilidad.",
+				},
+				respuestaCorrecta: "b",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
